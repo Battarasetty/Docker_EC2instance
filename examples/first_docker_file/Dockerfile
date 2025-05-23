@@ -1,16 +1,13 @@
-FROM ubuntu:latest
+FROM node:18-alpine
 
-# Set the working directory in the image
 WORKDIR /app
 
-# Copy the files from the host file system to the image file system
-COPY . /app
 
-# Install the necessary packages
-RUN apt-get update && apt-get install -y python3 python3-pip
+COPY package*.json ./
+RUN npm install
 
-# Set environment variables
-ENV NAME World
+COPY . .
 
-# Run a command to start the application
-CMD ["python3", "app.py"]
+EXPOSE 5001
+
+CMD ["node", "server.js"]
